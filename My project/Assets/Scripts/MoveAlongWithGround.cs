@@ -6,7 +6,7 @@ public class MoveAlongWithGround : MonoBehaviour
 
     void Update()
     {
-        transform.Translate(Vector3.forward * speed * Time.deltaTime);
+        transform.Translate(Vector3.back * speed * Time.deltaTime);
 
         if(transform.position.x > 15.0f)
         {

@@ -26,7 +26,7 @@ public class SpawnManager : MonoBehaviour
         float z = Random.Range(-4.5f, 4.5f);
 
         Vector3 spawnPosition = new Vector3(spawnDistance, spawnHeight, z);
-        Quaternion spawnRotation = Quaternion.Euler(0f, 90f, 0f);
+        Quaternion spawnRotation = Quaternion.Euler(0f, 270f, 0f);
 
 
         GameObject remy = Instantiate(prefab, spawnPosition, spawnRotation);
