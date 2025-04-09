@@ -12,5 +12,10 @@ public class Bullet : MonoBehaviour
             animator = other.GetComponent<Animator>();
             animator.SetTrigger("Die");
         }
+
+        if(other.CompareTag("Player"))
+        {
+            Debug.Log("Hit Player");
+        }
     }
 }

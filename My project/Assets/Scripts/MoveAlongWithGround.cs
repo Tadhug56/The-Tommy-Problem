@@ -6,9 +6,11 @@ public class MoveAlongWithGround : MonoBehaviour
 
     void Update()
     {
-        transform.Translate(Vector3.back * speed * Time.deltaTime);
+        // Move strictly along world X axis
+        transform.position += new Vector3(speed * Time.deltaTime, 0f, 0f);
 
-        if(transform.position.x > 15.0f)
+        // Destroy if beyond a certain x position
+        if (transform.position.x > 15f)
         {
             Destroy(gameObject);
         }

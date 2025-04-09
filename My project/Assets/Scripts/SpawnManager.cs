@@ -6,6 +6,7 @@ public class SpawnManager : MonoBehaviour
 {
     public GameObject remyPrefab; // Remy asset prefab (Basic civilian enemey)
     public GameObject gunPowerUpPrefab; // Gun powerup prefab
+    public GameObject swatPrefab; // Swat Prefab (Shooter enemey)
     public Transform player;      // Reference to the player to know where to spawn the cubes
     public float spawnInterval = 2f; // How often to spawn a cube
     private float lastSpawnTime;
@@ -18,6 +19,7 @@ public class SpawnManager : MonoBehaviour
         {
             SpawnRemy();
             SpawnGun();
+            SpawnSwat();
             lastSpawnTime = Time.time;
         }
     }
@@ -46,5 +48,18 @@ public class SpawnManager : MonoBehaviour
 
         GameObject powerUp = Instantiate(gunPowerUpPrefab, spawnPosition, Quaternion.identity);
         powerUp.transform.SetParent(transform);
+    }
+
+    void SpawnSwat()
+    {
+        float z = Random.Range(-4.5f, 4.5f);
+        float spawnHeight = 0.04f;
+
+        Vector3 spawnPosition = new Vector3(spawnDistance, spawnHeight, z);
+        Quaternion spawnRotation = Quaternion.Euler(0f, 90f, 0f);
+
+        GameObject swat = Instantiate(swatPrefab, spawnPosition, spawnRotation);
+        swat.transform.SetParent(transform);
+        swat.AddComponent<MoveAlongWithGround>();
     }
 }
