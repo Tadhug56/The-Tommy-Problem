@@ -10,6 +10,8 @@ public class EnemyShooter : MonoBehaviour
     private float nextFireTime = 0f;
     private float shootForce = 20.0f;
 
+    public bool alive = true;
+
     void Update()
     {
         if (Time.time >= nextFireTime)
@@ -21,12 +23,15 @@ public class EnemyShooter : MonoBehaviour
 
     void Shoot()
     {
-        GameObject projectile = Instantiate(bulletPrefab, shootPoint.position, shootPoint.rotation);
-        
-        Rigidbody rb = projectile.GetComponent<Rigidbody>();
-        rb.velocity = transform.forward * shootForce;
+        if(alive)
+        {
+            GameObject projectile = Instantiate(bulletPrefab, shootPoint.position, shootPoint.rotation);
+            
+            Rigidbody rb = projectile.GetComponent<Rigidbody>();
+            rb.velocity = transform.forward * shootForce;
 
-        // Optional: auto-destroy after a few seconds
-        Destroy(projectile, 3f);
+            // Optional: auto-destroy after a few seconds
+            Destroy(projectile, 3f);
+        }
     }
 }
