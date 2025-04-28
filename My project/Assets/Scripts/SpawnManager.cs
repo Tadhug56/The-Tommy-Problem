@@ -18,7 +18,7 @@ public class SpawnManager : MonoBehaviour
         if(Time.time - lastSpawnTime > spawnInterval)
         {
             SpawnRemy();
-            SpawnGun();
+            //SpawnGun();
             SpawnSwat();
             lastSpawnTime = Time.time;
         }
@@ -39,12 +39,12 @@ public class SpawnManager : MonoBehaviour
         remy.AddComponent<MoveAlongWithGround>();
     }
 
-    void SpawnGun()
+    public void SpawnGun(float x, float z)
     {
-        float z = Random.Range(-4.5f, 4.5f);
+        //float z = Random.Range(-4.5f, 4.5f);
         float spawnHeight = 1f;
 
-        Vector3 spawnPosition = new Vector3(spawnDistance, spawnHeight, z);
+        Vector3 spawnPosition = new Vector3(x, spawnHeight, z);
 
         GameObject powerUp = Instantiate(gunPowerUpPrefab, spawnPosition, Quaternion.identity);
         powerUp.transform.SetParent(transform);
