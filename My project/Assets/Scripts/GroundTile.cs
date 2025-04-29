@@ -6,9 +6,9 @@ public class GroundTile : MonoBehaviour
 {
 
     // Game pace related variables
-    public float speed = 5.0f; // The speed at which the tiles will move forwards
+    public static float speed = 5.0f; // The speed at which the tiles will move forwards
     public float tileLength = 30.0f; // The lenth of each tile
-    private Vector3 startPosition = new Vector3(-60 ,0, 0); // The start position of the last tile in the queue
+    private float distanceTraveled = 0f;
 
     // Player related variables
     public Transform player;
@@ -16,12 +16,17 @@ public class GroundTile : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position += new Vector3(speed * Time.deltaTime, 0, 0); // Move the tile forward across the x access
+        float moveAmount = speed * Time.deltaTime;
+
+        transform.position += new Vector3(moveAmount, 0, 0); // Move the tile forward across the x access
+
+        distanceTraveled += moveAmount;
 
         // If the tile moves its entire length accross the x access move it to the end of the queue
-        if(transform.position.x > tileLength)
+        if(distanceTraveled > tileLength)
         {
-            transform.position = startPosition;
+            transform.position -= new Vector3(tileLength, 0, 0);
+            distanceTraveled -= tileLength;
         }
     }
 }

@@ -7,6 +7,7 @@ public class SpawnManager : MonoBehaviour
     public GameObject remyPrefab; // Remy asset prefab (Basic civilian enemey)
     public GameObject gunPowerUpPrefab; // Gun powerup prefab
     public GameObject swatPrefab; // Swat Prefab (Shooter enemey)
+    public GameObject gatePrefab; // Gate prefab (Rectangles you run through for stat changes)
     public Transform player;      // Reference to the player to know where to spawn the cubes
     public float spawnInterval = 2f; // How often to spawn a cube
     private float lastSpawnTime;
@@ -17,9 +18,10 @@ public class SpawnManager : MonoBehaviour
     {
         if(Time.time - lastSpawnTime > spawnInterval)
         {
-            SpawnRemy();
+            //SpawnRemy();
             //SpawnGun();
-            SpawnSwat();
+            //SpawnSwat();
+            SpawnGate();
             lastSpawnTime = Time.time;
         }
     }
@@ -61,5 +63,17 @@ public class SpawnManager : MonoBehaviour
         GameObject swat = Instantiate(swatPrefab, spawnPosition, spawnRotation);
         swat.transform.SetParent(transform);
         swat.AddComponent<MoveAlongWithGround>();
+    }
+
+    void SpawnGate()
+    {
+        float spawnY = 1.0f;
+        float spawnZ = -0.5f;
+
+        Vector3 spawnPosition = new Vector3(spawnDistance, spawnY, spawnZ);
+        
+        GameObject gate = Instantiate(gatePrefab, spawnPosition, Quaternion.identity);
+        gate.transform.SetParent(transform);
+        gate.AddComponent<MoveAlongWithGround>();
     }
 }
