@@ -37,7 +37,6 @@ public class CutsceneManager : MonoBehaviour
 
     public void StartCutscene()
     {
-        Debug.Log("Called this");
         cutsceneStarted = true;
         StartCoroutine(PlayCutscene());
     }
@@ -49,7 +48,7 @@ public class CutsceneManager : MonoBehaviour
         {
             subtitleText.text = subtitles[i];
             yield return new WaitForSeconds(timeBetweenSubtitles);
-            Debug.Log("Line should have plauyed : " + subtitleText.text);
+            //Debug.Log("Line should have plauyed : " + subtitleText.text);
         }
 
         // end of cutscene: you could now load your game scene or re-enable gameplay
@@ -77,6 +76,6 @@ public class CutsceneManager : MonoBehaviour
         spawnManager.SetActive(true);
         // e.g. load gameplay, or re-enable main camera:
         // FindObjectOfType<MainMenu>().… or SceneManager.LoadScene(...)
-        Debug.Log("Cutscene complete");
+        //Debug.Log("Cutscene complete");
     }
 }

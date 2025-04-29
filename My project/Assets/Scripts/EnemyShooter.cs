@@ -2,15 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyShooter : MonoBehaviour
+public class EnemyShooter : Enemy
 {
     public GameObject bulletPrefab;
     public Transform shootPoint;
-    public float fireRate = 2f;
+    public float fireRate = 0.2f;
     private float nextFireTime = 0f;
     private float shootForce = 20.0f;
-
-    public bool alive = true;
 
     void Update()
     {

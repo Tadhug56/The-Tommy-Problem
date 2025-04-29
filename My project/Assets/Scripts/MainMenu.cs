@@ -17,7 +17,6 @@ public class MainMenu : MonoBehaviour
         // Start the cutscene
         cutsceneCamera.SetActive(true);
         cutsceneUI.SetActive(true);
-        Debug.Log("should have played");
 
         // Optional: Start the cutscene script
         FindObjectOfType<CutsceneManager>().StartCutscene();
