@@ -21,13 +21,28 @@ public class PlayerCollision : MonoBehaviour
     {
         if(other.CompareTag("Enemy"))
         {
-            Debug.Log("EnemyHit");
             animator = other.GetComponent<Animator>();
             animator.SetTrigger("Die");
     
             enemy = other.GetComponent<Enemy>();
             
-            // apply physics knockback
+            ApplyForce(other);
+
+            if(enemy != null)
+            {
+                enemy.alive = false;
+                
+                GameplayUI gameplayUIScript = FindObjectOfType<GameplayUI>();
+                gameplayUIScript.remainingTime += 1;
+                gameplayUIScript.UpdateKillCountUI();
+            }
+            
+        }
+    }
+
+    private void ApplyForce(Collider other)
+    {
+        // apply physics knockback
             Rigidbody rb = other.GetComponent<Rigidbody>();
             if (rb != null && enemy.alive)
             {
@@ -38,12 +53,5 @@ public class PlayerCollision : MonoBehaviour
                 // apply impulse
                 rb.AddForce(dir * knockbackForce, ForceMode.Impulse);
             }
-
-            if(enemy != null)
-            {
-                enemy.alive = false;
-                Timer.remainingTime += 2;
-            }
-        }
     }
 }

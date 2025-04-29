@@ -17,7 +17,9 @@ public class Bullet : MonoBehaviour
             if(enemyShooter != null)
             {
                 enemyShooter.alive = false;
-                Timer.remainingTime += 2;
+                GameplayUI gameplayUIScript = FindObjectOfType<GameplayUI>();
+                gameplayUIScript.remainingTime += 1;
+                gameplayUIScript.UpdateKillCountUI();
             }
         }
     }

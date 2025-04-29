@@ -21,16 +21,20 @@ public class CutsceneManager : MonoBehaviour
     public string[] subtitlesOpening;
     
     // Death cutscene
+
+    public GameObject deathCutscneUI;
     public Transform deathCameraPosition;
     public Vector3 deathCameraEndPosition;
     public bool deathCutsceneStarted;
     public string[] subtitlesDeath;
+    public TextMeshProUGUI deathSubtitleText;
     
     public float cameraMoveSpeed = 1.0f;
 
     public TextMeshProUGUI subtitleText;
     
     public float timeBetweenSubtitles = 10f;
+    private int sacrifices = 0;
 
     void Awake()
     {
@@ -41,6 +45,18 @@ public class CutsceneManager : MonoBehaviour
                 "My name is Tommy",
                 "And until recently I wasn't alive",
                 "I think I preferred it that way…"
+            };
+        }
+
+        if (subtitlesDeath == null || subtitlesDeath.Length == 0)
+        {
+            subtitlesDeath = new[]
+            {
+                "A moralist huh?",
+                "Hard to argue with a utilitarian",
+                "Just try not to think too hard about it",
+                "Self preservation.. I guess..",
+                "There's no rationalising this..."
             };
         }
     }
@@ -110,7 +126,11 @@ public class CutsceneManager : MonoBehaviour
         cutsceneUI.SetActive(false);
 
         gameplayUI.SetActive(true);
-        FindObjectOfType<Timer>().ResetTimer();
+        GameplayUI gameplayUIScript = FindObjectOfType<GameplayUI>();
+        gameplayUIScript.ResetTimer();
+        gameplayUIScript.ResetKillCount();
+
+        FindObjectOfType<Player>().playable = true;
 
         spawnManager.SetActive(true);
     }
@@ -120,15 +140,11 @@ public class CutsceneManager : MonoBehaviour
     public void StartDeathCutscene()
     {
         deathCutsceneStarted = true;
+        deathCutscneUI.SetActive(true);
         spawnManager.GetComponent<SpawnManager>().ClearGameplay();
         spawnManager.SetActive(false);
+        sacrifices = gameplayUI.GetComponent<GameplayUI>().killCount;
         gameplayUI.SetActive(false);
-       
-        subtitlesDeath = new[]
-        {
-            "It's...",
-            "It's .. over.."
-        };
 
         StartCoroutine(PlayDeathCutscene());
     }
@@ -139,13 +155,33 @@ public class CutsceneManager : MonoBehaviour
         cutsceneCamera.transform.rotation = deathCameraPosition.rotation;
         cutsceneCamera.SetActive(true);
 
-        // Show each subtitle
-        for(int i = 0; i < subtitlesDeath.Length; i++)
+        
+        if(sacrifices == 0)
         {
-            subtitleText.text = subtitlesDeath[i];
-            yield return new WaitForSeconds(timeBetweenSubtitles);
-            //Debug.Log("Line should have plauyed : " + subtitleText.text);
+            deathSubtitleText.text = subtitlesDeath[0]; // Moralist
         }
+
+        else if(sacrifices == 1)
+        {
+            deathSubtitleText.text = subtitlesDeath[1]; // Utilitarian
+        }
+
+        else if(sacrifices > 1 && sacrifices < 10)
+        {
+            deathSubtitleText.text = subtitlesDeath[2];
+        }
+
+        else if(sacrifices > 10 && sacrifices < 50)
+        {
+            deathSubtitleText.text = subtitlesDeath[3];
+        }
+
+        else
+        {
+            deathSubtitleText.text = subtitlesDeath[4];
+        }
+            
+        yield return new WaitForSeconds(timeBetweenSubtitles);
 
         EndDeathCutscene();
     }
@@ -162,6 +198,7 @@ public class CutsceneManager : MonoBehaviour
     private void EndDeathCutscene()
     {
         deathCutsceneStarted = false;
+        deathCutscneUI.SetActive(false);
         cutsceneUI.SetActive(false);
         menuUI.SetActive(true);
     }

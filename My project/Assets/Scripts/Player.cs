@@ -7,6 +7,7 @@ public class Player : MonoBehaviour
 {
     public int health;
     private int startingHealth = 3;
+    public bool playable = false;
     private bool dead = false;
 
     public Vector3 startPosition;
@@ -36,6 +37,7 @@ public class Player : MonoBehaviour
     public void PlayerLose()
     {
         Debug.Log("You lost");
+        playable = false;
         dead = true;
         
         animator.SetTrigger("Lose");

@@ -2,19 +2,24 @@ using UnityEngine;
 using TMPro;
 using System.Collections;
 
-public class Timer : MonoBehaviour
+public class GameplayUI : MonoBehaviour
 {
     public TextMeshProUGUI timerText;
     public int startTime = 30;
 
     public static float countDownSpeed = 1;
-    public static float remainingTime;
+    public float remainingTime;
+
+    public TextMeshProUGUI killCountText;
+
+    public int killCount = 0;
 
     private bool running = false;
 
     void Awake()
     {
         ResetTimer();
+        killCount = 0;
     }
 
     private IEnumerator TickDown()
@@ -38,10 +43,22 @@ public class Timer : MonoBehaviour
         timerText.text = "Self destruct in : " + display.ToString();
     }
 
+    public void UpdateKillCountUI()
+    {
+        killCount += 1;
+        killCountText.text = "Sacrifices : " + killCount.ToString();
+    }
+
     public void ResetTimer()
     {
         remainingTime = startTime;
         UpdateTimerUI();
         StartCoroutine(TickDown());
+    }
+
+    public void ResetKillCount()
+    {
+        killCount = -1; // Set to -1 so that the subsequent UpdateKillCountUI() resets it to 0
+        UpdateKillCountUI();
     }
 }
