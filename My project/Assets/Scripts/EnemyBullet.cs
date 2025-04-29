@@ -7,7 +7,10 @@ public class EnemyBullet : MonoBehaviour
     {       
         if(other.CompareTag("Player"))
         {
-            //Debug.Log("Hit Player");
+            Player playerScript = other.GetComponent<Player>();
+            playerScript.health -= 1;
+            playerScript.UpdateHealthUI();
+        
         }
     }
 }
