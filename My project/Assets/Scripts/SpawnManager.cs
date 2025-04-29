@@ -11,25 +11,55 @@ public class SpawnManager : MonoBehaviour
     public Transform player;      // Reference to the player to know where to spawn the cubes
     public float spawnInterval = 2f; // How often to spawn a cube
     private float lastSpawnTime;
-    private float spawnDistance = -30.0f;
 
     // Update is called once per frame
     void Update()
     {
         if(Time.time - lastSpawnTime > spawnInterval)
         {
-            //SpawnRemy();
-            //SpawnGun();
-            //SpawnSwat();
-            SpawnGate();
+            int roll = determineSpawn();
+
+            if(roll <= 60)
+            {
+                int numberToSpawn = Random.Range(1, 5);
+
+                for(int i = 0; i < numberToSpawn; i++)
+                {
+                    int spawnChance = Random.Range(1, 10);
+
+                    if(spawnChance <= 5)
+                    {
+                        SpawnRemy();
+                    }
+
+                    else
+                    {
+                        SpawnSwat();
+                    }
+                }
+            }
+
+            else if(roll > 60)
+            {
+                SpawnGate();
+            }
+
             lastSpawnTime = Time.time;
         }
+    }
+    
+    private int determineSpawn()
+    {
+        int roll = Random.Range(1, 100);
+
+        return roll;
     }
 
     void SpawnRemy()
     {
         float z = Random.Range(-4.5f, 4.5f);
         float spawnHeight = 0.0f;
+        float spawnDistance = Random.Range(-50.0f, -40.0f);
 
         Vector3 spawnPosition = new Vector3(spawnDistance, spawnHeight, z);
         Quaternion spawnRotation = Quaternion.Euler(0f, 270f, 0f);
@@ -56,6 +86,7 @@ public class SpawnManager : MonoBehaviour
     {
         float z = Random.Range(-4.5f, 4.5f);
         float spawnHeight = 0.04f;
+        float spawnDistance = Random.Range(-50.0f, -40.0f);
 
         Vector3 spawnPosition = new Vector3(spawnDistance, spawnHeight, z);
         Quaternion spawnRotation = Quaternion.Euler(0f, 90f, 0f);
@@ -69,6 +100,7 @@ public class SpawnManager : MonoBehaviour
     {
         float spawnY = 1.0f;
         float spawnZ = -0.5f;
+        float spawnDistance = Random.Range(-50.0f, -40.0f);
 
         Vector3 spawnPosition = new Vector3(spawnDistance, spawnY, spawnZ);
         

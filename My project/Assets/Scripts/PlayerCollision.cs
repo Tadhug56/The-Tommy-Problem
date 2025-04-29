@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 public class PlayerCollision : MonoBehaviour
 {
@@ -41,12 +42,8 @@ public class PlayerCollision : MonoBehaviour
             if(enemy != null)
             {
                 enemy.alive = false;
+                Timer.remainingTime += 2;
             }
-        }
-
-        else if(other.CompareTag("EnemyBullet"))
-        {
-            playerScript.health -= 1;
         }
     }
 }

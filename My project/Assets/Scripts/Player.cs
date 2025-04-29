@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-
     public int health;
+    public TextMeshProUGUI healthUIText;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,6 +20,11 @@ public class Player : MonoBehaviour
         {
             playerLose();
         }
+    }
+
+    public void UpdateHealthUI()
+    {
+        healthUIText.text = "Lives : " + health.ToString();
     }
 
     void playerLose()

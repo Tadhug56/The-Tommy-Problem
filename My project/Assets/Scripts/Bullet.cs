@@ -17,6 +17,7 @@ public class Bullet : MonoBehaviour
             if(enemyShooter != null)
             {
                 enemyShooter.alive = false;
+                Timer.remainingTime += 2;
             }
         }
     }

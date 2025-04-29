@@ -26,7 +26,9 @@ public class EnemyShooter : Enemy
             GameObject projectile = Instantiate(bulletPrefab, shootPoint.position, shootPoint.rotation);
             
             Rigidbody rb = projectile.GetComponent<Rigidbody>();
-            rb.velocity = transform.forward * shootForce;
+            Vector3 power = transform.forward * shootForce;
+            Vector3 groundAdjustment = Vector3.right * GroundTile.speed;
+            rb.velocity = power + groundAdjustment;
 
             // Optional: auto-destroy after a few seconds
             Destroy(projectile, 3f);

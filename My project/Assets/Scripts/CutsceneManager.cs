@@ -11,6 +11,7 @@ public class CutsceneManager : MonoBehaviour
     public GameObject spawnManager;
 
     public GameObject cutsceneUI;
+    public GameObject gameplayUI;
     public Transform cameraTransform;
     public Vector3 cameraEndPosition;
     public float cameraMoveSpeed = 1.0f;
@@ -73,9 +74,8 @@ public class CutsceneManager : MonoBehaviour
         mainCamera.SetActive(true);
         cutsceneCamera.SetActive(false);
         cutsceneUI.SetActive(false);
+        gameplayUI.SetActive(true);
         spawnManager.SetActive(true);
-        // e.g. load gameplay, or re-enable main camera:
-        // FindObjectOfType<MainMenu>().… or SceneManager.LoadScene(...)
-        //Debug.Log("Cutscene complete");
+        
     }
 }
