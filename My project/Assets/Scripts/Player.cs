@@ -6,19 +6,25 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public int health;
+    private int startingHealth = 3;
+    private bool dead = false;
+
+    public Vector3 startPosition;
+
+    public Animator animator;
     public TextMeshProUGUI healthUIText;
     // Start is called before the first frame update
     void Start()
     {
-        health = 5;
+        health = startingHealth;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(health == 0)
+        if(health == 0 && !dead)
         {
-            playerLose();
+            PlayerLose();
         }
     }
 
@@ -27,8 +33,27 @@ public class Player : MonoBehaviour
         healthUIText.text = "Lives : " + health.ToString();
     }
 
-    void playerLose()
+    public void PlayerLose()
     {
         Debug.Log("You lost");
+        dead = true;
+        
+        animator.SetTrigger("Lose");
+        GroundTile.speed = 0;
+        FindObjectOfType<CutsceneManager>().StartDeathCutscene();
+    }
+
+    public void ResetPlayer()
+    {
+        this.transform.position = startPosition;
+        health = startingHealth;
+        UpdateHealthUI();
+        
+        if(dead)
+        {
+            animator.SetTrigger("Reset");
+        }
+
+        dead = false;
     }
 }

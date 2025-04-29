@@ -14,10 +14,7 @@ public class Timer : MonoBehaviour
 
     void Awake()
     {
-        remainingTime = startTime;
-
-        UpdateTimerUI();
-        StartCoroutine(TickDown());
+        ResetTimer();
     }
 
     private IEnumerator TickDown()
@@ -32,11 +29,19 @@ public class Timer : MonoBehaviour
         }
 
         running = false;
+        FindObjectOfType<Player>().PlayerLose();
     }
 
     void UpdateTimerUI()
     {
         int display = Mathf.CeilToInt(remainingTime);
-        timerText.text = "Time before self destruct : " + display.ToString();
+        timerText.text = "Self destruct in : " + display.ToString();
+    }
+
+    public void ResetTimer()
+    {
+        remainingTime = startTime;
+        UpdateTimerUI();
+        StartCoroutine(TickDown());
     }
 }

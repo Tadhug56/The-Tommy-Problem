@@ -108,4 +108,12 @@ public class SpawnManager : MonoBehaviour
         gate.transform.SetParent(transform);
         gate.AddComponent<MoveAlongWithGround>();
     }
+
+    public void ClearGameplay()
+    {
+        foreach(Transform child in transform)
+        {
+            Destroy(child.gameObject);
+        }
+    }
 }
