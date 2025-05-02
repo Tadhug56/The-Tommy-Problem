@@ -9,13 +9,17 @@ public class SpawnManager : MonoBehaviour
     public GameObject swatPrefab; // Swat Prefab (Shooter enemey)
     public GameObject gatePrefab; // Gate prefab (Rectangles you run through for stat changes)
     public Transform player;      // Reference to the player to know where to spawn the cubes
-    public float spawnInterval = 2f; // How often to spawn a cube
+    public float spawnInterval; // How often to spawn a cube
     private float lastSpawnTime;
 
+    void Start()
+    {
+        spawnInterval = 10.0f;
+    }
     // Update is called once per frame
     void Update()
     {
-        if(Time.time - lastSpawnTime > spawnInterval)
+        if(Time.time - lastSpawnTime > (spawnInterval / GroundTile.speed))
         {
             int roll = determineSpawn();
 
